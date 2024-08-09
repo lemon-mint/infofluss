@@ -1,0 +1,253 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body {
+	font-family: "IBM Plex Sans", "IBM Plex Sans KR", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  background-color: #f0e8ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+	text-wrap: wrap;
+	line-break: auto;
+}
+
+input:focus {
+	outline: none;
+}
+
+/* ibm-plex-sans-kr-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'IBM Plex Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/ibm-plex-sans-kr-v10-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('/fonts/ibm-plex-sans-kr-v10-latin-regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+
+/* ibm-plex-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/ibm-plex-sans-v19-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('/fonts/ibm-plex-sans-v19-latin-regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+
+/* ibm-plex-mono-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/ibm-plex-mono-v19-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('/fonts/ibm-plex-mono-v19-latin-regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+
+/**
+	@preserve 
+	IBMPlexSansKR-Thin.ttf: Copyright 2018 IBM Corp. All rights reserved.
+  IBMPlexSansKR-ExtraLight.ttf: Copyright 2018 IBM Corp. All rights reserved.
+  IBMPlexSansKR-Light.ttf: Copyright 2018 IBM Corp. All rights reserved.
+  IBMPlexSansKR-Regular.ttf: Copyright 2018 IBM Corp. All rights reserved.
+  IBMPlexSansKR-Medium.ttf: Copyright 2018 IBM Corp. All rights reserved.
+  IBMPlexSansKR-SemiBold.ttf: Copyright 2018 IBM Corp. All rights reserved.
+  IBMPlexSansKR-Bold.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-Thin.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-ThinItalic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-ExtraLight.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-ExtraLightItalic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-Light.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-LightItalic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-Regular.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-Italic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-Medium.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-MediumItalic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-SemiBold.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-SemiBoldItalic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-Bold.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexSans-BoldItalic.ttf: Copyright 2018 IBM Corp. All rights reserved.
+	IBMPlexMono-Thin.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-ThinItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-ExtraLight.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-ExtraLightItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-Light.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-LightItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-Regular.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-Italic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-Medium.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-MediumItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-SemiBold.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-SemiBoldItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-Bold.ttf: Copyright 2017 IBM Corp. All rights reserved.
+	IBMPlexMono-BoldItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+
+	https://openfontlicense.org/open-font-license-official-text/
+**/
+
+.search-results-container {
+	padding-top: 1em;
+	color: #414141;
+	font-size: 1rem;
+	line-height: 1.6;
+	letter-spacing: 0.5px;
+}
+
+.search-results-container p {
+	font-size: 1rem;
+	margin-bottom: 1rem;
+}
+
+.search-results-container h1 {
+	font-size: 2rem;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+}
+
+.search-results-container h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.search-results-container h3 {
+	font-size: 1.2rem;
+	margin-top: 1.2rem;
+	margin-bottom: 1rem;
+}
+
+.search-results-container a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.search-results-container a:hover {
+	text-decoration: underline;
+}
+
+.search-results-container a:visited {
+	color: #0366d6;
+}
+
+.search-results-container blockquote {
+	border-left: 4px solid #dfe2e5;
+	color: #6a737d;
+	padding-left: 1rem;
+	margin: 1rem 0;
+}
+
+.search-results-container table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	display: block;
+	width: 100%;
+	overflow: auto;
+	margin-bottom: 1rem;
+}
+
+.search-results-container table th, .search-results-container table td {
+	padding: 0.5rem 1rem;
+	border: 1px solid #dfe2e5;
+}
+
+.search-results-container table th {
+	font-weight: 600;
+}
+
+.search-results-container strong, .search-results-container b {
+	font-weight: 600;
+}
+
+.search-results-container em, .search-results-container i {
+	font-style: italic;
+}
+
+.search-results-container code {
+	font-family: "IBM Plex Mono", monospace;
+	background-color: rgba(27, 31, 35, 0.05);
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+}
+
+.search-results-container pre {
+	background-color: #f6f8fa;
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	margin-bottom: 1rem;
+}
+
+.search-results-container pre code {
+	background-color: transparent;
+	padding: 0;
+	border-radius: 0;
+	font-size: 100%;
+}
+
+.search-results-container ul, .search-results-container ol {
+	padding-left: 2em;
+	margin-bottom: 1rem;
+}
+
+.search-results-container li {
+	margin-bottom: 0.25rem;
+}
+
+.search-results-container hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}

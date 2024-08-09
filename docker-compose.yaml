@@ -1,0 +1,25 @@
+services:
+  infofluss:
+    image: infofluss:latest
+    container_name: infofluss
+    restart: always
+    networks:
+      - default
+    ports:
+    - 38281:38281
+    volumes:
+    - ${GOOGLE_APPLICATION_CREDENTIALS}:/application_default_credentials.json:ro
+    env_file: .env
+    environment:
+    - PORT=38281
+    - GOOGLE_APPLICATION_CREDENTIALS=/application_default_credentials.json
+
+  search_server:
+    image: docker.io/searxng/searxng:latest
+    container_name: search_server
+    restart: always
+    networks:
+    - default
+
+networks:
+  default:
