@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/lemon-mint/coord/llm"
 	"github.com/lemon-mint/infofluss/internal/queryplan"
 	"github.com/lemon-mint/infofluss/internal/search"
 )
@@ -19,7 +20,7 @@ type Session struct {
 	QueryPlan       *queryplan.QueryPlan
 	Results         [][]search.SearchResult
 	RerankedResults [][]search.SearchResult
-	CrawledPages    map[string]string
+	CrawledPages    map[string][]llm.Segment
 
 	Error error
 
@@ -89,7 +90,7 @@ func (g *Server) NewSession(query string) *Session {
 		ID:           newSessionID(),
 		Query:        query,
 		Stream:       make(chan *Message, 128),
-		CrawledPages: map[string]string{},
+		CrawledPages: map[string][]llm.Segment{},
 	}
 	g.sessions[s.ID] = s
 	return s

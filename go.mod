@@ -6,6 +6,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.9.2
 	github.com/go-rod/rod v0.116.2
 	github.com/google/go-jsonnet v0.20.0
+	github.com/klippa-app/go-pdfium v1.12.2
 	github.com/lemon-mint/coord v0.0.0-20240805015347-4cad2d67191c
 	github.com/lemon-mint/envaddr v0.0.0-20220724120637-f2bfd2710deb
 	github.com/rs/zerolog v1.33.0
@@ -35,9 +36,11 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.13.0 // indirect
+	github.com/jolestar/go-commons-pool/v2 v2.1.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/sashabaranov/go-openai v1.27.1 // indirect
+	github.com/tetratelabs/wazero v1.7.3 // indirect
 	github.com/valyala/fastjson v1.6.4 // indirect
 	github.com/ysmood/fetchup v0.2.4 // indirect
 	github.com/ysmood/goob v0.4.0 // indirect

@@ -158,7 +158,7 @@ func (g *Server) searchWorker(s *Session) {
 		wg.Add(1)
 		go func(url string) {
 			defer wg.Done()
-			html, err := g.CrawlPage(url)
+			contents, err := g.CrawlPage(url)
 			if err != nil {
 				log.Error().Err(err).Str("url", url).Msg("Failed to crawl page")
 				return
@@ -169,7 +169,7 @@ func (g *Server) searchWorker(s *Session) {
 				URL:  url,
 			}
 			crawlMu.Lock()
-			s.CrawledPages[url] = html
+			s.CrawledPages[url] = contents
 			crawlMu.Unlock()
 		}(url)
 	}
@@ -181,8 +181,8 @@ func (g *Server) searchWorker(s *Session) {
 	for url, crawledPage := range s.CrawledPages {
 		i++
 		documents = append(documents, chat.Document{
-			Source:  url,
-			Content: crawledPage,
+			Source:   url,
+			Contents: crawledPage,
 		})
 		source[strconv.Itoa(i)] = url
 	}
@@ -240,32 +240,42 @@ func (g *Server) searchWorker(s *Session) {
 	}
 }
 
-func (g *Server) CrawlPage(url string) (string, error) {
+func (g *Server) CrawlPage(url string) ([]llm.Segment, error) {
 	var rawhtml string
 	var err error
 
 	if g.config.CrawlerConfigs.Mode == "cdp" {
 		rawhtml, err = crawl.ScrapeCDP(url)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
+	} else if g.config.CrawlerConfigs.Mode == "cdp_images" {
+		images, err := crawl.ScrapeCDPImages(url)
+		if err != nil {
+			return nil, err
+		}
+		var parts []llm.Segment
+		for _, image := range images {
+			parts = append(parts, &image)
+		}
+		return parts, nil
 	} else if g.config.CrawlerConfigs.Mode == "http" {
 		rawhtml, err = crawl.ScrapeHTTP(httpClient, url)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 	} else {
-		return "", fmt.Errorf("unknown crawler mode: %s", g.config.CrawlerConfigs.Mode)
+		return nil, fmt.Errorf("unknown crawler mode: %s", g.config.CrawlerConfigs.Mode)
 	}
 
 	cleaned, err := htmldistill.Clean(rawhtml)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	if !utf8.ValidString(cleaned) {
-		return "", fmt.Errorf("utf8 validation failed")
+		return nil, fmt.Errorf("utf8 validation failed")
 	}
 
-	return cleaned, nil
+	return []llm.Segment{llm.Text(cleaned)}, nil
 }

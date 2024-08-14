@@ -32,11 +32,12 @@ Make active use of Markdown tables, bolding, italics, and links.
 All responses should begin with a Markdown heading.`
 
 type Document struct {
-	Source  string
-	Content string
+	Source   string
+	Contents []llm.Segment
 }
 
 func Generate(ctx context.Context, m llm.Model, query string, queryplan *queryplan.QueryPlan, documents []Document) *llm.StreamContent {
+	var parts []llm.Segment
 	var sb strings.Builder
 
 	sb.WriteString("<user_query>\n")
@@ -47,6 +48,8 @@ func Generate(ctx context.Context, m llm.Model, query string, queryplan *querypl
 	sb.WriteString(queryplan.Instruction)
 	sb.WriteString("</instructions>\n")
 	sb.WriteString("</user_query>\n\n")
+	parts = append(parts, llm.Text(sb.String()))
+	sb.Reset()
 
 	sb.WriteString("<documents>\n")
 	for i, doc := range documents {
@@ -57,14 +60,23 @@ func Generate(ctx context.Context, m llm.Model, query string, queryplan *querypl
 		sb.WriteString("\n")
 		sb.WriteString("</source>\n")
 		sb.WriteString("<content>\n")
-		sb.WriteString(doc.Content)
+		parts = append(parts, llm.Text(sb.String()))
+		sb.Reset()
+		parts = append(parts, doc.Contents...)
 		sb.WriteString("\n\n")
 		sb.WriteString("</content>\n")
 		sb.WriteString("</document>\n")
+		parts = append(parts, llm.Text(sb.String()))
+		sb.Reset()
 	}
 	sb.WriteString("</documents>\n")
+	parts = append(parts, llm.Text(sb.String()))
+	sb.Reset()
 
 	return m.GenerateStream(ctx, &llm.ChatContext{
 		SystemInstruction: prompt,
-	}, llm.TextContent(llm.RoleUser, sb.String()))
+	}, &llm.Content{
+		Role:  llm.RoleUser,
+		Parts: parts,
+	})
 }
