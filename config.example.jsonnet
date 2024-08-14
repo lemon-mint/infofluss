@@ -51,6 +51,6 @@
     },
   },
   crawler_configs: {
-    mode: 'cdp_images',
+    mode: 'cdp',
   },
 }
