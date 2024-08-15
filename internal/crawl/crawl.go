@@ -3,6 +3,7 @@ package crawl
 import (
 	"bytes"
 	"fmt"
+	"image"
 	"image/jpeg"
 	"io"
 	"net/http"
@@ -112,6 +113,79 @@ func ScrapeHTTP(client *http.Client, url string) (string, error) {
 }
 
 func ScrapeCDPImages(url string) ([]llm.InlineData, error) {
+	browser := rod.New()
+
+	err := browser.Connect()
+	if err != nil {
+		return nil, err
+	}
+	defer browser.Close()
+
+	page, err := browser.Page(proto.TargetCreateTarget{})
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = page.EvalOnNewDocument(JS)
+	if err != nil {
+		return nil, err
+	}
+
+	err = page.Navigate(url)
+	if err != nil {
+		return nil, err
+	}
+
+	err = page.WaitLoad()
+	if err != nil {
+		return nil, err
+	}
+	time.Sleep(time.Second * 1)
+
+	screenshot, err := page.ScrollScreenshot(
+		&rod.ScrollScreenshotOptions{
+			Format:        proto.PageCaptureScreenshotFormatJpeg,
+			WaitPerScroll: 300 * time.Microsecond,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	img, err := jpeg.Decode(bytes.NewReader(screenshot))
+	if err != nil {
+		return nil, err
+	}
+
+	var inlineData []llm.InlineData
+	for i := 0; i < (img.Bounds().Dy()+1023)/1024; i++ {
+		height := min(1024, img.Bounds().Dy()-i*1024)
+		var subImage *image.RGBA = image.NewRGBA(image.Rectangle{
+			Min: image.Point{0, 0},
+			Max: image.Point{img.Bounds().Dx(), height},
+		})
+		for x := 0; x < img.Bounds().Dx(); x++ {
+			for y := i * 1024; y < i*1024+height; y++ {
+				subImage.Set(x, y-i*1024, img.At(x, y))
+			}
+		}
+
+		var buffer bytes.Buffer
+		err = jpeg.Encode(&buffer, subImage, nil)
+		if err != nil {
+			return nil, err
+		}
+
+		inlineData = append(inlineData, llm.InlineData{
+			Data:     buffer.Bytes(),
+			MIMEType: "image/jpeg",
+		})
+	}
+
+	return inlineData, nil
+}
+
+func ScrapeCDPImagesPDF(url string) ([]llm.InlineData, error) {
 	browser := rod.New()
 
 	err := browser.Connect()

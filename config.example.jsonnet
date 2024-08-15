@@ -34,10 +34,10 @@
   ],
   model_configs: {
     chat: {
-      provider: 'groq',
-      model: 'llama-3.1-70b-versatile',
+      provider: 'aistudio',
+      model: 'gemini-1.5-flash-001',
       parameters: {
-        temperature: 0.1,
+        temperature: 1.0,
       },
     },
     query_planner: $.model_configs.chat,

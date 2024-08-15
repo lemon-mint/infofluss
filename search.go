@@ -249,6 +249,16 @@ func (g *Server) CrawlPage(url string) ([]llm.Segment, error) {
 		if err != nil {
 			return nil, err
 		}
+	} else if g.config.CrawlerConfigs.Mode == "cdp_pdf" {
+		images, err := crawl.ScrapeCDPImagesPDF(url)
+		if err != nil {
+			return nil, err
+		}
+		var parts []llm.Segment
+		for _, image := range images {
+			parts = append(parts, &image)
+		}
+		return parts, nil
 	} else if g.config.CrawlerConfigs.Mode == "cdp_images" {
 		images, err := crawl.ScrapeCDPImages(url)
 		if err != nil {
