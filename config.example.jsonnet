@@ -34,17 +34,23 @@
   ],
   model_configs: {
     chat: {
-      provider: 'aistudio',
-      model: 'gemini-1.5-flash-001',
+      provider: 'vertexai',
+      model: 'gemini-flash-experimental',
       parameters: {
         temperature: 1.0,
       },
     },
-    query_planner: $.model_configs.chat,
+    query_planner: {
+      provider: 'vertexai',
+      model: 'gemini-pro-experimental',
+      parameters: {
+        temperature: 1.0,
+      },
+    },
     search_reranker: $.model_configs.chat,
     response_generator: {
       provider: 'vertexai',
-      model: 'gemini-experimental',
+      model: 'gemini-pro-experimental',
       parameters: {
         temperature: 0.85,
       },
